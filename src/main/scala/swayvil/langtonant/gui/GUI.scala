@@ -1,16 +1,16 @@
 package swayvil.langtonant.gui
 
-import java.awt.{ Graphics2D, Color, Font }
-import java.awt.{ Color => AWTColor }
+import main.scala.swayvil.langtonant.Game
+import scala.swing.Panel
+import java.awt.Color
 
 trait GUI {
-  val black = new AWTColor(0, 0, 0)
-  val font = new Font("Batang", Font.PLAIN, 10)
-  val windowWidth = 350
-  val windowHeight = 400
-  val white = new AWTColor(255, 255, 255)
-  val blockSize = 20.0
-  val blockMargin = 2f
+  val black = new Color(0, 0, 0)
+  val red = new Color(255, 0, 0)
+  val white = new Color(255, 255, 255)
+  val matrixTop = 0
+  val squareSize = 10
+  val blockMargin = 1f
 
-  def onPaint(g: Graphics2D)
+  //def onPaint(g: Graphics2D)
 }

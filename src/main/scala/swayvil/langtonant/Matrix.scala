@@ -1,12 +1,14 @@
-class Square(var x: Integer, var y: Integer) {
+package swayvil.langtonant
+
+class Square(var x: Int, var y: Int) {
   var isWhite: Boolean = true
+  var isAnt: Boolean = false
 }
 
-class Matrix {
-  private val size: Integer = 10
-  private var matrix = Array.tabulate[Square](size, size) { (i, j) => new Square(i, j) }
+class Matrix(var size: Int) {
+  var matrix = Array.tabulate[Square](size, size) { (i, j) => new Square(i, j) }
 
   def printMatrix {
-    matrix.foreach { (row: Array[Square]) => row.foreach { (square: Square) => print(square.x + "-" + square.y + " ") } ; println }
+    matrix.foreach { (row: Array[Square]) => row.foreach { (square: Square) => print(square.x + "-" + square.y + " ") }; println }
   }
 }
