@@ -1,3 +1,8 @@
+/*--
+2017 swayvil
+https://github.com/swayvil/langton-ant
+++*/
+
 package main.scala.swayvil.langtonant
 
 import swayvil.langtonant.Matrix

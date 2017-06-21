@@ -1,3 +1,8 @@
+/*--
+2017 swayvil
+https://github.com/swayvil/langton-ant
+++*/
+
 package swayvil.langtonant
 
 import swing._
@@ -8,6 +13,7 @@ import swayvil.langtonant.gui.GraphicMatrix
 import swayvil.langtonant.gui.GraphicTurn
 import main.scala.swayvil.langtonant.Game
 import swayvil.langtonant.gui.GUI
+import swayvil.langtonant.gui.CompositeGUI
 
 object Application {
   def main(args: Array[String]) = {
@@ -15,17 +21,24 @@ object Application {
     var guiApp = new GUIApplication(game)
     guiApp.main(args)
 
-    game.graphicMatrix = guiApp.graphicMatrix
-    game.graphicTurn = guiApp.graphicTurn
+    game.gui = guiApp.gui
     game.nextTurn()
   }
 
   class GUIApplication(var game: Game) extends SimpleSwingApplication with GUI {
-    //var gui: CompositeGUI = new CompositeGUI(game)
+    var gui: CompositeGUI = new CompositeGUI()
 
-    //def onKeyPress(keyCode: Value) = keyCode match {
-    //case Key.Enter => game.pauseOrResume()
-    //}
+    def onKeyPress(keyCode: Value) = keyCode match {
+      case Key.Enter => game.pauseOrResume()
+    }
+
+    def paint(g: Graphics2D) {
+      top.repaint()
+    }
+
+    def repaint() {
+      top.repaint()
+    }
 
     def onPaint(g: Graphics2D) {
       top.repaint()
@@ -33,38 +46,30 @@ object Application {
 
     var graphicMatrix: Panel = new GraphicMatrix(game)
     var graphicTurn: Panel = new GraphicTurn(game)
-    //var graphicAnt: Panel = new GraphicAnt(game)
+    gui.+=(graphicMatrix)
+    gui.+=(graphicTurn)
 
     def top = new MainFrame {
       title = "Langton\'s ant"
       contents = new BoxPanel(Orientation.Vertical) {
-        contents += graphicMatrix
-        contents += graphicTurn
-        //contents += graphicAnt
-        //gui.childGUIs += graphicMatrix
-        //gui.childGUIs += graphicTurn
-        //gui.childGUIs += graphicAnt
+        gui.childGUIs foreach { contents += _ }
 
         var windowWidth = game.matrixSize * squareSize
-        var windowHeight = game.matrixSize * squareSize + matrixTop
+        var windowHeight = game.matrixSize * squareSize
 
         preferredSize = new Dimension(windowWidth, windowHeight)
         focusable = true
 
         listenTo(keys)
-        //reactions += {
-        //case KeyPressed(_, key, _, _) =>
-        //onKeyPress(key)
-        //repaint
-        //}
+        reactions += {
+          case KeyPressed(_, key, _, _) =>
+            onKeyPress(key)
+        }
 
         override def paint(g: Graphics2D) {
           g setColor white
           g fillRect (0, 0, windowWidth, windowHeight)
-          graphicMatrix.paint(g)
-          graphicTurn.paint(g)
-          //graphicAnt.paint(g)
-          //gui.onPaint(g)
+          gui.paint(g)
         }
       }
     }

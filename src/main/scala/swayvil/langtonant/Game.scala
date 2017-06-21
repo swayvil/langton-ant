@@ -1,3 +1,8 @@
+/*--
+2017 swayvil
+https://github.com/swayvil/langton-ant
+++*/
+
 package main.scala.swayvil.langtonant
 
 import swayvil.langtonant.Matrix
@@ -6,29 +11,25 @@ import ExecutionContext.Implicits.global
 import scala.util.Success
 import scala.util.Failure
 import scala.concurrent.duration.Duration
-import swayvil.langtonant.Application.GUIApplication
-import scala.swing.MainFrame
-import swayvil.langtonant.gui.GraphicMatrix
-import scala.swing.Panel
+import swayvil.langtonant.gui.CompositeGUI
 
 class Game() {
   var turn: Int = 0
-  var speed: Int = 1
   val turnTime: Long = 2 // ms
-  //var gui: CompositeGUI = null
-  var graphicMatrix: Panel = null
-  var graphicTurn: Panel = null
+  var gui: CompositeGUI = null
   var isRunning: Boolean = true
   val matrixSize: Int = 80
   var m: Matrix = new Matrix(matrixSize)
   var ant: Ant = new Ant(m)
 
   def nextTurn() {
+    if (!isRunning)
+      return
+
     turn += 1
     if (!ant.move()) {
       isRunning = false
-    }
-    else {
+    } else {
       val f: Future[Int] = Future {
         Thread.sleep(turnTime)
         0
@@ -38,8 +39,7 @@ class Game() {
         case Success(v) => {
           if (isRunning) {
             nextTurn()
-            graphicMatrix.repaint()
-            graphicTurn.repaint()
+            gui.repaint()
           }
         }
         case Failure(v) => { println("FAILURE") }
@@ -48,9 +48,8 @@ class Game() {
   }
 
   def pauseOrResume() {
-    if (speed > 0)
-      speed = 0 // pause
-    else
-      speed = 1 // resume
+    isRunning = !isRunning
+    if (isRunning)
+      nextTurn()
   }
 }

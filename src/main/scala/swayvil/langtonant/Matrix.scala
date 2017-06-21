@@ -1,3 +1,8 @@
+/*--
+2017 swayvil
+https://github.com/swayvil/langton-ant
+++*/
+
 package swayvil.langtonant
 
 class Square(var x: Int, var y: Int) {
