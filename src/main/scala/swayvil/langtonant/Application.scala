@@ -44,7 +44,7 @@ object Application {
       top.repaint()
     }
 
-    var graphicMatrix: Panel = new GraphicMatrix(game)
+    var graphicMatrix: Panel = new GraphicMatrix(game.m)
     var graphicTurn: Panel = new GraphicTurn(game)
     gui.+=(graphicMatrix)
     gui.+=(graphicTurn)

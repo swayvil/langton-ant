@@ -15,12 +15,12 @@ import swayvil.langtonant.gui.CompositeGUI
 
 class Game() {
   var turn: Int = 0
-  val turnTime: Long = 2 // ms
+  private val turnTime: Long = 2 // ms
   var gui: CompositeGUI = null
-  var isRunning: Boolean = true
+  private var isRunning: Boolean = true
   val matrixSize: Int = 80
   var m: Matrix = new Matrix(matrixSize)
-  var ant: Ant = new Ant(m)
+  private var ant: Ant = new Ant(m)
 
   def nextTurn() {
     if (!isRunning)

@@ -8,9 +8,9 @@ package main.scala.swayvil.langtonant
 import swayvil.langtonant.Matrix
 
 class Ant(var m: Matrix) {
-  var x: Int = m.size / 2
-  var y: Int = m.size / 2
-  var direction: Int = 0 // 0: North, 1: East, 2: South, 3: West
+  private var x: Int = m.size / 2
+  private var y: Int = m.size / 2
+  private var direction: Int = 0 // 0: North, 1: East, 2: South, 3: West
 
   def move(): Boolean = {
     if (m.matrix(x)(y).isWhite) {

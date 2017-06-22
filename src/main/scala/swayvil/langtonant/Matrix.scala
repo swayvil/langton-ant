@@ -13,6 +13,7 @@ class Square(var x: Int, var y: Int) {
 class Matrix(var size: Int) {
   var matrix = Array.tabulate[Square](size, size) { (i, j) => new Square(i, j) }
 
+  // To debug
   def printMatrix {
     matrix.foreach { (row: Array[Square]) => row.foreach { (square: Square) => print(square.x + "-" + square.y + " ") }; println }
   }
